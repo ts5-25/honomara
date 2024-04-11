@@ -63,11 +63,7 @@ class _EventContainerState extends State<EventContainer> {
           ),
           
           if (_showRunners)
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.5, // 高さを画面の50%に制限
-              ),
-              child: ListView.builder(
+              ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: widget.event.runners.length,
@@ -85,7 +81,7 @@ class _EventContainerState extends State<EventContainer> {
                   );
                 },
               ),
-            ),
+            
         ],
       ),
     );
