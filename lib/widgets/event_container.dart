@@ -37,7 +37,7 @@ class _EventContainerState extends State<EventContainer> {
                 horizontal: 20,
                 vertical: 10,
               ),
-              color: Colors.black12,
+              color: Colors.pink[100],
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

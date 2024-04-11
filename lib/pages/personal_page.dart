@@ -47,7 +47,7 @@ class _PersonalPageState extends State<PersonalPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    color: Colors.black12,
+                    color: Colors.blue[100],
                     padding: const EdgeInsets.all(12.0), // 余白を追加
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,

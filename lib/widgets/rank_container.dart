@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:honomara/models/record.dart';
+import 'package:honomara/models/rank.dart';
 
-class RecordContainer extends StatelessWidget{
-  const RecordContainer({
+class RankContainer extends StatelessWidget{
+  const RankContainer({
     super.key,
-    required this.record,
+    required this.rank,
     required this.index,
   });
 
-  final Record record;
+  final Rank rank;
   final int index;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: index % 2 == 0 ?Colors.transparent: Colors.blue[50],
+        color: index % 2 == 0 ?Colors.transparent: Colors.pink.shade50,
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 6,
@@ -23,7 +23,7 @@ class RecordContainer extends StatelessWidget{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              record.date,
+              rank.name,
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black,
@@ -33,14 +33,14 @@ class RecordContainer extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  record.event,
+                  rank.event,
                   style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,
                   ),
                 ),
                 Text(
-                  record.time,
+                  rank.time,
                   style: const TextStyle(
                     fontSize: 20,
                     color: Colors.black,

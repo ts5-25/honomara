@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:honomara/models/event.dart';
-import 'package:honomara/widgets/event_container.dart';
+import 'package:honomara/models/rank.dart';
+import 'package:honomara/widgets/rank_container.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class RankingPage extends StatefulWidget {
@@ -13,13 +13,14 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  List<Event> events = [];
+  List<Rank> ranks = [];
 
   Future<void> getData() async {
-    final jsonData = await rootBundle.loadString('json/data.json');
-    final Map<String, dynamic> decodedData = jsonDecode(jsonData);
-    final List<dynamic> eventData = decodedData['event'];
-    events = eventData.map((json) => Event.fromJson(json)).toList();
+    final jsonData = await rootBundle.loadString('json/ranking.json');
+    final List<dynamic> decodedData = jsonDecode(jsonData);
+    // JSONデータをtime降順でソート
+  decodedData.sort((a, b) => (b['time'] as num).compareTo(a['time'] as num));
+  ranks = decodedData.map((json) => Rank.fromJson(json)).toList();
     setState(() {});
   }
 
@@ -42,10 +43,10 @@ class _RankingPageState extends State<RankingPage> {
         radius: const Radius.circular(4.0), // スクロールバーの角丸を4pxに変更
         thumbVisibility: true,
         child: ListView.builder(
-          itemCount: events.length,
+          itemCount: ranks.length,
           itemBuilder: (context, index) {
-            final event = events[index];
-            return EventContainer(event: event);
+            final rank = ranks[index];
+            return RankContainer(rank: rank, index: index,);
           },
         ),
       ),
