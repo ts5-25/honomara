@@ -9,10 +9,12 @@ class PersonalPage extends StatefulWidget {
     super.key,
     required this.name,
     required this.grade,
+    this.pb = "",
   }); 
 
   final String name;
   final String grade;
+  final String pb;
 
   @override
   State<PersonalPage> createState() => _PersonalPageState();
@@ -25,7 +27,7 @@ class _PersonalPageState extends State<PersonalPage> {
     final jsonData = await rootBundle.loadString('json/data.json');
     final Map<String, dynamic> decodedData = jsonDecode(jsonData);
     final List<dynamic> eventData = decodedData['event'];
-    person = Person.fromJson(widget.name, widget.grade, eventData);
+    person = Person.fromJson(widget.name, widget.grade, widget.pb, eventData);
     setState(() {});
   }
 
@@ -48,7 +50,10 @@ class _PersonalPageState extends State<PersonalPage> {
               children: [
                 Container(
                     color: Colors.blue[100],
-                    padding: const EdgeInsets.all(12.0), // 余白を追加
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ), // 余白を追加
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -71,6 +76,16 @@ class _PersonalPageState extends State<PersonalPage> {
                             fontSize: 16.0,
                           ),
                         ),
+                        Expanded(child:
+                        Text(
+                          person!.pb!,
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        ),
                       ],
                     ),
                   
@@ -80,7 +95,7 @@ class _PersonalPageState extends State<PersonalPage> {
                     itemCount: person!.records.length,
                     itemBuilder: (context, index) {
                       final record = person!.records[index];
-                      return RecordContainer(record: record, index: index);
+                      return RecordContainer(record: record, index: index, isPB: record.time == person!.pb!);
                     },
                   ),
                 ),

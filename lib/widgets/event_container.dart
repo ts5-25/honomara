@@ -53,7 +53,7 @@ class _EventContainerState extends State<EventContainer> {
                   Text(
                     widget.event.name,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 18,
                       color: Colors.black,
                     ),
                   ),

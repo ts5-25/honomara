@@ -4,14 +4,16 @@ class Person {
   Person({
     required this.name,
     required this.grade,
+    this.pb = "",
     this.records = const [], 
   });
 
   final String name;
   final String grade;
+  final String? pb;
   final List<Record> records;
 
-  factory Person.fromJson(String name, String grade, dynamic json) {
+  factory Person.fromJson(String name, String grade, String pb, dynamic json) {
     final List<Record> list = [];
     for (final event in json) {
       for (final runner in event['runners']) {
@@ -23,6 +25,7 @@ class Person {
     return Person(
       name: name,
       grade: grade,
+      pb: pb,
       records: list, 
     );
   }

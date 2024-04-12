@@ -27,7 +27,7 @@ class RunnerContainer extends StatelessWidget{
               runner.name,
               textAlign: TextAlign.start,
               style: const TextStyle(
-                fontSize: 15,
+                fontSize: 16,
                 color: Colors.black,
               ),
             ),
@@ -36,7 +36,7 @@ class RunnerContainer extends StatelessWidget{
             runner.grade,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 15,
+              fontSize: 16,
               color: Colors.black,
             ),
           ),
@@ -45,7 +45,7 @@ class RunnerContainer extends StatelessWidget{
               runner.time,
               textAlign: TextAlign.end,
               style: const TextStyle(
-                fontSize: 15,
+                fontSize: 18,
                 color: Colors.black,
               ),
             ),

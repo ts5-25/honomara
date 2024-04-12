@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:honomara/models/rank.dart';
+import 'package:honomara/pages/personal_page.dart';
 
 class RankContainer extends StatelessWidget{
   const RankContainer({
@@ -13,29 +14,46 @@ class RankContainer extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: index % 2 == 0 ?Colors.transparent: Colors.pink.shade50,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 6,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
           children: [
-            Text(
-              rank.name,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black,
+            GestureDetector(
+              onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: ((context) => PersonalPage(name: rank.name, grade: rank.grade, pb: rank.time,)),
+                        ),
+                      ); // Containerをタップした時の処理
+                    },
+            child: 
+            Container(
+              color: Colors.pink[50],
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 6,
               ),
-            ),
+              child: 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  rank.event,
+                  (index + 1).toString(),
                   style: const TextStyle(
                     fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  rank.name,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  rank.grade,
+                  style: const TextStyle(
+                    fontSize: 16,
                     color: Colors.black,
                   ),
                 ),
@@ -48,8 +66,39 @@ class RankContainer extends StatelessWidget{
                 ),
               ]
             ),
+            ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(
+                right: 20,
+                bottom: 10,
+              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  rank.date,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  rank.event,
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ]
+            ),
+            ),
           ],
-        ),
+
     );
   }
 }
