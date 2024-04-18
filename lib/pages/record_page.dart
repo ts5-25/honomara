@@ -17,6 +17,8 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
   List<Event> events = [];
   List<Rank> ranks = [];
   late TabController _tabController;
+  List<String> selectedGrade = ["28期", "29期", "30期", "31期"];
+  List<Rank> display = [];
 
   Future<void> getData() async {
     final jsonData = await rootBundle.loadString('json/data.json');
@@ -36,6 +38,7 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
       return aTime.compareTo(bTime);
     });
     ranks = decodedData.map((json) => Rank.fromJson(json)).toList();
+    display = ranks;
     setState(() {});
   }
 
@@ -48,6 +51,16 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
     int minutes = int.parse(parts[1]);
     int seconds = int.parse(parts[2]);
     return hours * 3600 + minutes * 60 + seconds;
+  }
+
+  List<Rank> selectGrade() {
+    final List<Rank> sortRanks = [];
+    for (Rank rank in ranks) {
+      if (selectedGrade.contains(rank.grade)) {
+        sortRanks.add(rank);
+      }
+    }
+    return sortRanks;
   }
 
   @override
@@ -95,8 +108,27 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(
-            child: Scrollbar(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                width: double.infinity,
+                color: Colors.pink[50],
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: const Text(
+                "※記録は全てネットタイム",
+                textAlign: TextAlign.end,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black, 
+                          ),
+                ),
+              ),
+              Expanded(
+                child:
+              Scrollbar(
                 thickness: 8.0,
                 radius: const Radius.circular(4.0),
                 // thumbVisibility: true,
@@ -108,22 +140,142 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
                   },
                 ),
               ),
-            
+              ),
+            ]
           ),
-          Center(
-            child: Scrollbar(
+          Column(
+            children: [
+              Container(
+                width: double.infinity,
+                color: Colors.pink[50],
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: const Text(
+                "※記録は全てネットタイム",
+                textAlign: TextAlign.end,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black, 
+                          ),
+                ),
+              ),
+              Wrap(
+                spacing: 10,
+                children: [
+                  FilterChip(
+                    label: Text(
+                      "28期",
+                      style: TextStyle(
+                            color: selectedGrade.contains("28期")? Colors.white: Colors.black, 
+                          ),
+                    ),
+                    backgroundColor: Colors.white,
+                    selectedColor: Colors.grey[600],
+                    showCheckmark: false,
+                    selected: selectedGrade.contains("28期"),
+                    onSelected: (bool value) {
+                      setState(() {
+                        if (value) {
+                          if (!selectedGrade.contains("28期")) {
+                            selectedGrade.add("28期");
+                          }
+                        } else {
+                          selectedGrade.removeWhere((filterFilter) => filterFilter == "28期");
+                        }
+                        display = selectGrade();
+                      });
+                    },
+                  ),
+                  FilterChip(
+                    label: Text(
+                      "29期",
+                      style: TextStyle(
+                            color: selectedGrade.contains("29期")? Colors.white: Colors.black, 
+                          ),
+                    ),
+                    backgroundColor: Colors.white,
+                    selectedColor: Colors.grey[600],
+                    showCheckmark: false,
+                    selected: selectedGrade.contains("29期"),
+                    onSelected: (bool value) {
+                      setState(() {
+                        if (value) {
+                          if (!selectedGrade.contains("29期")) {
+                            selectedGrade.add("29期");
+                          }
+                        } else {
+                          selectedGrade.removeWhere((filterFilter) => filterFilter == "29期");
+                        }
+                        display = selectGrade();
+                      });
+                    },
+                  ),
+                  FilterChip(
+                    label: Text(
+                      "30期",
+                      style: TextStyle(
+                            color: selectedGrade.contains("30期")? Colors.white: Colors.black, 
+                          ),
+                    ),
+                    backgroundColor: Colors.white,
+                    selectedColor: Colors.grey[600],
+                    showCheckmark: false,
+                    selected: selectedGrade.contains("30期"),
+                    onSelected: (bool value) {
+                      setState(() {
+                        if (value) {
+                          if (!selectedGrade.contains("30期")) {
+                            selectedGrade.add("30期");
+                          }
+                        } else {
+                          selectedGrade.removeWhere((filterFilter) => filterFilter == "30期");
+                        }
+                        display = selectGrade();
+                      });
+                    },
+                  ),
+                  FilterChip(
+                    label: Text(
+                      "31期",
+                      style: TextStyle(
+                            color: selectedGrade.contains("31期")? Colors.white: Colors.black, 
+                          ),
+                    ),
+                    backgroundColor: Colors.white,
+                    selectedColor: Colors.grey[600],
+                    showCheckmark: false,
+                    selected: selectedGrade.contains("31期"),
+                    onSelected: (bool value) {
+                      setState(() {
+                        if (value) {
+                          if (!selectedGrade.contains("31期")) {
+                            selectedGrade.add("31期");
+                          }
+                        } else {
+                          selectedGrade.removeWhere((filterFilter) => filterFilter == "31期");
+                        }
+                        display = selectGrade();
+                      });
+                    },
+                  ),
+                ]
+              ),
+              Expanded(child: 
+              Scrollbar(
                 thickness: 8.0,
                 radius: const Radius.circular(4.0),
                 // thumbVisibility: true,
                 child: ListView.builder(
-                  itemCount: ranks.length,
+                  itemCount: display.length,
                   itemBuilder: (context, index) {
-                    final rank = ranks[index];
+                    final rank = display[index];
                     return RankContainer(rank: rank, index: index,);
                   },
                 ),
               ),
-            
+              ),
+            ]
           ),
         ],
       ),    
