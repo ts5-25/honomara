@@ -127,19 +127,21 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
                 ),
               ),
               Expanded(
-                child:
-              Scrollbar(
-                thickness: 8.0,
-                radius: const Radius.circular(4.0),
-                // thumbVisibility: true,
-                child: ListView.builder(
-                  itemCount: events.length,
-                  itemBuilder: (context, index) {
-                    final event = events[index];
-                    return EventContainer(event: event);
-                  },
+                child: Scrollbar(
+                  thickness: 8.0,
+                  radius: const Radius.circular(4.0),
+                  // thumbVisibility: true,
+                  child: ListView.builder(
+                    itemCount: events.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == events.length) { 
+                        return Container(height: 20, color: Colors.pink[50],); // 余白の高さを指定
+                      }
+                      final event = events[index];
+                      return EventContainer(event: event);
+                    },
+                  ),
                 ),
-              ),
               ),
             ]
           ),
@@ -167,7 +169,7 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
                     label: Text(
                       "28期",
                       style: TextStyle(
-                            color: selectedGrade.contains("28期")? Colors.white: Colors.black, 
+                            color: selectedGrade.contains("28期")? Colors.white: Colors.grey[600], 
                           ),
                     ),
                     backgroundColor: Colors.white,
@@ -191,7 +193,7 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
                     label: Text(
                       "29期",
                       style: TextStyle(
-                            color: selectedGrade.contains("29期")? Colors.white: Colors.black, 
+                            color: selectedGrade.contains("29期")? Colors.white: Colors.grey[600], 
                           ),
                     ),
                     backgroundColor: Colors.white,
@@ -215,7 +217,7 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
                     label: Text(
                       "30期",
                       style: TextStyle(
-                            color: selectedGrade.contains("30期")? Colors.white: Colors.black, 
+                            color: selectedGrade.contains("30期")? Colors.white: Colors.grey[600], 
                           ),
                     ),
                     backgroundColor: Colors.white,
@@ -239,7 +241,7 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
                     label: Text(
                       "31期",
                       style: TextStyle(
-                            color: selectedGrade.contains("31期")? Colors.white: Colors.black, 
+                            color: selectedGrade.contains("31期")? Colors.white: Colors.grey[600], 
                           ),
                     ),
                     backgroundColor: Colors.white,
@@ -261,19 +263,22 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
                   ),
                 ]
               ),
-              Expanded(child: 
-              Scrollbar(
-                thickness: 8.0,
-                radius: const Radius.circular(4.0),
-                // thumbVisibility: true,
-                child: ListView.builder(
-                  itemCount: display.length,
-                  itemBuilder: (context, index) {
-                    final rank = display[index];
-                    return RankContainer(rank: rank, index: index,);
-                  },
+              Expanded(
+                child: Scrollbar(
+                  thickness: 8.0,
+                  radius: const Radius.circular(4.0),
+                  // thumbVisibility: true,
+                  child: ListView.builder(
+                    itemCount: display.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == display.length) { 
+                        return Container(height: 20, color: Colors.pink[50],); // 余白の高さを指定
+                      }
+                      final rank = display[index];
+                      return RankContainer(rank: rank, index: index,);
+                    },
+                  ),
                 ),
-              ),
               ),
             ]
           ),
