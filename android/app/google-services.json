@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "665185086396",
+    "project_id": "honomara-ranking",
+    "storage_bucket": "honomara-ranking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665185086396:android:8d53fc5f73bb9b0b3dd9b9",
+        "android_client_info": {
+          "package_name": "com.example.honomara"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmldTElnwavF63IhPSYoI3peyz0ptwlQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
