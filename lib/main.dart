@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:honomara/pages/record_page.dart';
-import 'package:honomara/pages/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:honomara/pages/admin_page.dart';
+import 'package:honomara/pages/login_page.dart';
+import 'package:honomara/pages/record_page.dart';
+
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,13 +31,14 @@ class MainApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.notoSansJpTextTheme(
           Theme.of(context).textTheme.apply(
-                bodyColor: Colors.white,
+                bodyColor: Colors.black,
               ),
         ),
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
       routes: {
-        '/recordPage': (context) => const RecordPage(), // RecordPageを'/recordPage'ルートにマッピング
+        '/recordPage': (context) => const RecordPage(),
+        '/adminPage': (context) => const AdminPage(),
       },
     );
   }
