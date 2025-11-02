@@ -1,0 +1,2 @@
+/Users/ssu5/honomara/honomara/android/app/.cxx/Debug/y6b6b2x5/x86_64/CMakeFiles/edit_cache.dir
+/Users/ssu5/honomara/honomara/android/app/.cxx/Debug/y6b6b2x5/x86_64/CMakeFiles/rebuild_cache.dir

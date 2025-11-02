@@ -1,8 +1,9 @@
-import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:honomara/models/event.dart';
 import 'package:honomara/models/person.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:honomara/widgets/record_container.dart';
+import 'package:honomara/utils/date_utils.dart';
 
 class PersonalPage extends StatefulWidget {
   const PersonalPage({
@@ -10,7 +11,7 @@ class PersonalPage extends StatefulWidget {
     required this.name,
     required this.grade,
     this.pb = "",
-  }); 
+  });
 
   final String name;
   final String grade;
@@ -24,10 +25,22 @@ class _PersonalPageState extends State<PersonalPage> {
   Person? person;
 
   Future<void> getData() async {
-    final jsonData = await rootBundle.loadString('json/data.json');
-    final Map<String, dynamic> decodedData = jsonDecode(jsonData);
-    final List<dynamic> eventData = decodedData['event'];
+    CollectionReference collection =
+        FirebaseFirestore.instance.collection('events');
+    QuerySnapshot querySnapshot = await collection.get();
+
+    List<Event> eventData = querySnapshot.docs
+        .map((doc) => Event.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+
+    eventData.sort((a, b) {
+      DateTime aDate = parseDateString(a.date);
+      DateTime bDate = parseDateString(b.date);
+      return aDate.compareTo(bDate);
+    });
+
     person = Person.fromJson(widget.name, widget.grade, widget.pb, eventData);
+
     setState(() {});
   }
 
@@ -49,35 +62,35 @@ class _PersonalPageState extends State<PersonalPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    color: Colors.blue[100],
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
-                    ), // 余白を追加
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          child: Text(
-                            person!.name,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                        Text(
-                          person!.grade,
+                  color: Colors.blue[100],
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ), // 余白を追加
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          person!.name,
                           style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 16.0,
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Expanded(child:
-                        Text(
+                      ),
+                      const SizedBox(width: 15),
+                      Text(
+                        person!.grade,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
                           person!.pb!,
                           textAlign: TextAlign.end,
                           style: const TextStyle(
@@ -85,17 +98,19 @@ class _PersonalPageState extends State<PersonalPage> {
                             fontSize: 20.0,
                           ),
                         ),
-                        ),
-                      ],
-                    ),
-                  
+                      ),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: ListView.builder(
                     itemCount: person!.records.length,
                     itemBuilder: (context, index) {
                       final record = person!.records[index];
-                      return RecordContainer(record: record, index: index, isPB: record.time == person!.pb!);
+                      return RecordContainer(
+                          record: record,
+                          index: index,
+                          isPB: record.time == person!.pb!);
                     },
                   ),
                 ),
@@ -107,4 +122,3 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 }
-

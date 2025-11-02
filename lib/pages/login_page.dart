@@ -14,6 +14,11 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   String _errorMessage = '';
 
+  final Map<String, String> userMap = {
+    'admin': 'admin@example.com',
+    'honomara': 'honomara1715@gmail.com',
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,17 +39,17 @@ class _LoginPageState extends State<LoginPage> {
               controller: _emailController,
               decoration: const InputDecoration(labelText: 'ユーザー名'),
               style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
+                fontSize: 18,
+                color: Colors.black,
+              ),
             ),
             TextField(
               controller: _passwordController,
               decoration: const InputDecoration(labelText: 'パスワード'),
               style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
+                fontSize: 18,
+                color: Colors.black,
+              ),
               obscureText: true,
             ),
             Text(
@@ -55,14 +60,29 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('ログイン'),
               onPressed: () async {
                 try {
-                  final user = await _auth.signInWithEmailAndPassword(
-                    email: _emailController.text == 'honomara' ? 'honomara1715@gmail.com' : 'abcd@example.com',
+                  String email = _emailController.text;
+                  if (userMap.containsKey(email)) {
+                    email = userMap[email]!;
+                  }
+                  final userCredential = await _auth.signInWithEmailAndPassword(
+                    email: email,
                     password: _passwordController.text,
                   );
-                  Navigator.pushReplacementNamed(context, '/recordPage');
+                  final user = userCredential.user;
+                  if (user != null) {
+                    if (!context.mounted) return;
+                    if (user.email == 'admin@example.com') {
+                      Navigator.pushReplacementNamed(context, '/adminPage');
+                    } else {
+                      Navigator.pushReplacementNamed(context, '/recordPage');
+                    }
+                  }
                 } on FirebaseAuthException catch (e) {
                   setState(() {
-                    if (e.code == 'user-not-found' || e.code == 'invalid-email' || e.code == 'invalid-credential' || e.code == 'wrong-password') {
+                    if (e.code == 'user-not-found' ||
+                        e.code == 'invalid-email' ||
+                        e.code == 'invalid-credential' ||
+                        e.code == 'wrong-password') {
                       _errorMessage = 'ユーザー名またはパスワードが違います。';
                     } else if (e.code == 'channel-error') {
                       _errorMessage = 'パスワードを入力してください。';
