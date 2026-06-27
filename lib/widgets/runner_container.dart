@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:honomara/models/runner.dart';
+import 'package:honomara/utils/time_utils.dart';
 
 class RunnerContainer extends StatelessWidget{
   const RunnerContainer({
@@ -42,7 +43,7 @@ class RunnerContainer extends StatelessWidget{
           ),
           Expanded(
             child: Text(
-              runner.time,
+              isDnf(runner.time) ? 'DNF' : runner.time,
               textAlign: TextAlign.end,
               style: const TextStyle(
                 fontSize: 18,
