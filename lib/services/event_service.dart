@@ -41,7 +41,7 @@ Future<void> addEvent({
               });
             }
           } else {
-            runnerRef.set({
+            await runnerRef.set({
               'name': runnerName,
               'grade': runnerGrade,
               'time': runnerTime,
@@ -55,7 +55,7 @@ Future<void> addEvent({
               FirebaseFirestore.instance.collection('runners').doc(runnerName);
           DocumentSnapshot runnerDoc = await runnerRef.get();
           if (!runnerDoc.exists) {
-            runnerRef.set({
+            await runnerRef.set({
               'name': runnerName,
               'grade': runnerGrade,
               'time': '',

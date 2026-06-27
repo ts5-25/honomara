@@ -1,12 +1,19 @@
-const String dnfTime = '0:00:00';
+const int dnfSortValue = 999999;
 
 bool isDnf(String timeString) {
-  return timeString == dnfTime;
+  final parts = timeString.split(':');
+  if (parts.length != 3) {
+    return false;
+  }
+  final hours = int.tryParse(parts[0]);
+  final minutes = int.tryParse(parts[1]);
+  final seconds = int.tryParse(parts[2]);
+  return hours == 0 && minutes == 0 && seconds == 0;
 }
 
 int parseTimeString(String timeString) {
   if (isDnf(timeString)) {
-    return 999999; // DNFはソートで最後に来るようにする
+    return dnfSortValue;
   }
   List<String> parts = timeString.split(':');
   if (parts.length != 3) {
