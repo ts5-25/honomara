@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:honomara/models/record.dart';
+import 'package:honomara/utils/time_utils.dart';
 
 class RecordContainer extends StatelessWidget{
   const RecordContainer({
@@ -49,7 +50,7 @@ class RecordContainer extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isPB ? "PB" : "",
+                  isPB && !isDnf(record.time) ? "PB" : "",
                   style: const TextStyle(
                     fontSize: 18,
                     color: Colors.red,
@@ -57,7 +58,7 @@ class RecordContainer extends StatelessWidget{
                   ),
                 ),
                 Text(
-                  record.time,
+                  isDnf(record.time) ? 'DNF' : record.time,
                   style: const TextStyle(
                     fontSize: 20,
                     color: Colors.black,

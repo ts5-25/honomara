@@ -4,6 +4,7 @@ import 'package:honomara/models/event.dart';
 import 'package:honomara/models/person.dart';
 import 'package:honomara/widgets/record_container.dart';
 import 'package:honomara/utils/date_utils.dart';
+import 'package:honomara/utils/time_utils.dart';
 
 class PersonalPage extends StatefulWidget {
   const PersonalPage({
@@ -110,7 +111,7 @@ class _PersonalPageState extends State<PersonalPage> {
                       return RecordContainer(
                           record: record,
                           index: index,
-                          isPB: record.time == person!.pb!);
+                          isPB: !isDnf(record.time) && record.time == person!.pb!);
                     },
                   ),
                 ),

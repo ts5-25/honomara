@@ -23,29 +23,46 @@ Future<void> addEvent({
         });
 
         // runnersコレクションのデータを更新する処理
-        DocumentReference runnerRef =
-            FirebaseFirestore.instance.collection('runners').doc(runnerName);
+        // DNFの場合はベストタイムを更新しない
+        if (!isDnf(runnerTime)) {
+          DocumentReference runnerRef =
+              FirebaseFirestore.instance.collection('runners').doc(runnerName);
 
-        DocumentSnapshot runnerDoc = await runnerRef.get();
+          DocumentSnapshot runnerDoc = await runnerRef.get();
 
-        if (runnerDoc.exists) {
-          String existingTime = runnerDoc['time'];
-          if (existingTime.isEmpty ||
-              isNewTimeFaster(existingTime, runnerTime)) {
-            runnerRef.update({
+          if (runnerDoc.exists) {
+            String existingTime = runnerDoc['time'];
+            if (existingTime.isEmpty ||
+                isNewTimeFaster(existingTime, runnerTime)) {
+              runnerRef.update({
+                'time': runnerTime,
+                'event': name,
+                'date': date,
+              });
+            }
+          } else {
+            runnerRef.set({
+              'name': runnerName,
+              'grade': runnerGrade,
               'time': runnerTime,
               'event': name,
               'date': date,
             });
           }
         } else {
-          runnerRef.set({
-            'name': runnerName,
-            'grade': runnerGrade,
-            'time': runnerTime,
-            'event': name,
-            'date': date,
-          });
+          // DNFでもrunnersコレクションにドキュメントがなければ空タイムで作成
+          DocumentReference runnerRef =
+              FirebaseFirestore.instance.collection('runners').doc(runnerName);
+          DocumentSnapshot runnerDoc = await runnerRef.get();
+          if (!runnerDoc.exists) {
+            runnerRef.set({
+              'name': runnerName,
+              'grade': runnerGrade,
+              'time': '',
+              'event': '',
+              'date': '',
+            });
+          }
         }
       }
     }
