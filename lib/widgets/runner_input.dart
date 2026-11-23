@@ -22,7 +22,7 @@ class RunnerInput extends StatefulWidget {
 }
 
 class _RunnerInputState extends State<RunnerInput> {
-  final List<String> _grades = ['27期', '28期', '29期', '30期', '31期', '32期', '33期'];
+  final List<String> _grades = ['27期', '28期', '29期', '30期', '31期', '32期', '33期', '34期'];
   List<String> _names = [];
 
   @override

@@ -20,7 +20,7 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
   List<Event> events = [];
   List<Rank> ranks = [];
   late TabController _tabController;
-  List<String> selectedGrade = ['27期', "28期", "29期", "30期", "31期", "32期", "33期"];
+  List<String> selectedGrade = ['27期', "28期", "29期", "30期", "31期", "32期", "33期", "34期"];
   List<Rank> display = [];
 
   Future<void> getData() async {
@@ -246,6 +246,16 @@ class _RecordPageState extends State<RecordPage> with TickerProviderStateMixin {
               ),
               GradeFilterChip(
                 grade: "33期",
+                selectedGrade: selectedGrade,
+                onSelectionChanged: (newSelectedGrade) {
+                  setState(() {
+                    selectedGrade = newSelectedGrade;
+                    display = selectGrade();
+                  });
+                },
+              ),
+              GradeFilterChip(
+                grade: "34期",
                 selectedGrade: selectedGrade,
                 onSelectionChanged: (newSelectedGrade) {
                   setState(() {
